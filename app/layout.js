@@ -1,15 +1,13 @@
-import localFont from "next/font/local";
+// import localFont from "next/font/local";
 import "./globals.css";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+import { Fredoka } from 'next/font/google';
+const fredoka = Fredoka({
+  subsets: ['latin'],
+  weights: ['300', '400', '500', '600', '700'],
+  variable: '--font-fredoka'
 });
 
 export const metadata = {
@@ -20,10 +18,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${fredoka.variable} antialiased light`}>
+        <SidebarProvider>
+          <AppSidebar />
+          <main className="w-full">
+            <div className="border-b w-full border-sidebar-border bg-sidebar p-2"><SidebarTrigger /></div>
+            <div className="p-4">{children}</div>
+          </main>
+        </SidebarProvider>
       </body>
     </html>
   );
